@@ -35,7 +35,7 @@ db.allDocs({ includes_docs: true, descending: true })
 
 // 4- Cambiar el valor 'sincronizado' de todos los objetos
 //  en la BD a TRUE
-db.allDocs({ includes_docs: true, descending: false })
+/* db.allDocs({ includes_docs: true, descending: false })
     .then( docs => {
 
         docs.rows.forEach( row => {
@@ -48,7 +48,7 @@ db.allDocs({ includes_docs: true, descending: false })
             db.put( doc );
 
         });
-    });
+    }); */
 
 
 
@@ -57,6 +57,16 @@ db.allDocs({ includes_docs: true, descending: false })
 // deberá de comentar todo el código que actualiza
 // el campo de la sincronización 
 
+db.allDocs( {includes_docs: true} ).then( docs => {
+
+    docs.rows.forEach( row => {
+
+        let doc = row.doc;
+
+        if ( doc.sincronizado ) return db.remove( doc );
+        
+    });
+});
 
 
 
