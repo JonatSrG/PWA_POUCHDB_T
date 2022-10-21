@@ -5,6 +5,8 @@
 // 1- Crear la base de datos
 // Nombre:  mensajes
 
+db = new PouchDB('mensajes');
+
 
 
 // Objeto a grabar en base de datos
@@ -17,11 +19,14 @@ let mensaje = {
 
 
 // 2- Insertar en la base de datos
-
+db.put( mensaje ).then( console.log('registrando') );
 
 
 // 3- Leer todos los mensajes offline
-
+db.allDoc({ includes_docs: true, descending: true })
+    .then( doc => {
+        console.log( doc );
+    });
 
 
 
