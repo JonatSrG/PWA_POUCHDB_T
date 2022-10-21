@@ -19,20 +19,36 @@ let mensaje = {
 
 
 // 2- Insertar en la base de datos
-db.put( mensaje ).then( console.log('registrando') );
+//db.put( mensaje ).then( console.log('registrando') );
 
 
 // 3- Leer todos los mensajes offline
-db.allDoc({ includes_docs: true, descending: true })
+db.allDocs({ includes_docs: true, descending: true })
+
     .then( doc => {
+
         console.log( doc );
+
     });
 
 
 
 // 4- Cambiar el valor 'sincronizado' de todos los objetos
 //  en la BD a TRUE
+db.allDocs({ includes_docs: true, descending: false })
+    .then( docs => {
 
+        docs.rows.forEach( row => {
+            
+            console.log( row.doc );
+
+            let doc = row.doc;
+            doc.sincronizado = true;
+
+            db.put( doc );
+
+        });
+    });
 
 
 
